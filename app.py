@@ -10,7 +10,7 @@ import enchant
 from itertools import permutations
 import pyautogui
 
-CHAT_LOG_PATH = r'C:\Users\alexp\AppData\Roaming\.minecraft\logs\latest.log'
+CHAT_LOG_PATH = r'PATH_TO_LATEST.LOG'
 JSON_FILE_PATH = 'typed_words.json'
 
 # Regular expressions to match the specific phrases
@@ -51,11 +51,11 @@ def unscramble_word(scrambled_word):
     return None
 
 def type_in_minecraft(text):
-    time.sleep(random.uniform(1.5, 2.0))  # Wait between 1.5 and 2.0 seconds
+    time.sleep(random.uniform(1.5, 2.0))
     pyautogui.typewrite(text)
     pyautogui.press('enter')
-    time.sleep(1)  # Wait 1 second
-    pyautogui.press('t')  # Open the chat again
+    time.sleep(1)
+    pyautogui.press('t')
 
 def record_word(word):
     try:
@@ -102,9 +102,9 @@ def monitor_log():
                     result = f"{equation} = {answer}"
                     print(f"\r🎉 Equation found ({result}) {timestamp}", flush=True)
                     record_word(str(answer))
-                    if mode == '2':  # AFK Mode
+                    if mode == '2':
                         type_in_minecraft(str(answer))
-                        countdown(420)  # Start countdown for 7 minutes (420 seconds)
+                        countdown(420)  
                 continue
 
             type_match = TYPE_REGEX.search(line)
@@ -112,9 +112,9 @@ def monitor_log():
                 word = type_match.group(1)
                 print(f"\r🎉 Word found ({word}) {timestamp}", flush=True)
                 record_word(word)
-                if mode == '2':  # AFK Mode
+                if mode == '2':
                     type_in_minecraft(word)
-                    countdown(420)  # Start countdown for 7 minutes (420 seconds)
+                    countdown(420) 
                 continue
 
             unscramble_match = UNSCRAMBLE_REGEX.search(line)
@@ -125,15 +125,15 @@ def monitor_log():
                     result = f"{scrambled_word} -> {unscrambled_word}"
                     print(f"\r🎉 Unscramble word found ({result}) {timestamp}", flush=True)
                     record_word(unscrambled_word)
-                    if mode == '2':  # AFK Mode
+                    if mode == '2':
                         type_in_minecraft(unscrambled_word)
-                        countdown(420)  # Start countdown for 7 minutes (420 seconds)
+                        countdown(420) 
                 else:
                     print(f"\r🎉 Unscramble word found ({scrambled_word} -> No valid word found) {timestamp}", flush=True)
                 continue
 
             print("👀 Searching...", end='\r', flush=True)
-            time.sleep(0.1)  # Adjust the speed of the refresh
+            time.sleep(0.1)
 
     except FileNotFoundError:
         print(f"File not found: {CHAT_LOG_PATH}")
